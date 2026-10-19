@@ -1,0 +1,44 @@
+\begin{comment}
+Alcune linee guida per scrivere la tesi: 1) Ogni immagine/tabella deve avere le seguenti caratteristiche: a) Una caption; b) Deve essere esplicitamente commentata all'interno del testo (ricordatevi che se vi riferite alla figura/tabella inserendo anche il corrispettivo numero e.g., Figura X mostra che... allora la prima lettera deve essere scritta in maiuscolo; E ricordatevi che latex mette a disposizione un comando per citare correttamente (ref) senza dover mettere a mano il numeretto corrispondente) c) Le immagini devono essere rifatte tramite PPT o similari e salvate in pdf prima di inserirle nel file latex, altrimenti rischiate di inserire immagini sgranate. 2) Ricordatevi sempre di citare le fonti e di rifrasare, altrimenti rischiate di inccorrere nel reato di plagio (che può comportare anche la revoca del titolo accademico) e che citare non sminuisce il vostro lavoro, anzi, lo rafforza. 3)L'Abstract deve necessariamente contenere le seuguenti informazioni a) Un breve riasssunto della problematica; b)Una breve descrizione di ciò che è stato fatto; c) I risultati ottenuti.
+\end{comment}
+\chapter{Introduction}
+
+\section{Background}
+
+\paragraph{Game Development and Engineering Standards}
+Game development is a branch of software engineering focused on producing video games. Because the industry expanded relatively late in the West (growing significantly only after the 1985 US release of the Nintendo Entertainment System), its production pipelines lack the formal definitions common in enterprise software development. Whereas organizations such as ISO, IEC, and IEEE publish globally accepted standards for software life cycle processes \cite{12207-2026}, game development relies on less formalized workflows. McKenzie et al. note similarities with Agile methodologies, but game development does not strictly adhere to them \cite{se_practices_game_dev}.
+
+\paragraph{Evolution of Game Development and Distribution}
+Over the past two decades, the video game industry has undergone one of the most significant paradigm shifts in software. Before the widespread adoption of high-speed internet, games were distributed ``as-is'' with no assurance of maintenance or evolution. Software updates were scarce, and physical ``game expansions'' incurred prohibitive distribution costs, restricting them to high-budget projects. Consequently, maintenance and evolution were not central to the software life cycle. Today, continuous updates and downloadable content (DLC) are the norm. The traditional release model is increasingly being superseded by Games-as-a-Service (GaaS) and Early Access (EA) release strategies, which introduce fundamentally different development pipelines and player behaviors \cite{paradigm_shifts_game_dev, ea_steam}.
+
+\paragraph{Impact on Development Pipelines}
+This shift has forced production pipelines to become faster and more iterative. However, little work has been done to formalize requirements extraction and user feedback validation. Meanwhile, the player base and the volume of feedback have grown exponentially, driven by integrated review systems on digital distribution platforms. This often creates a critical gap between user needs and developer deliverables. Furthermore, researchers have yet to reach a consensus on the optimal approach to aggregate and analyze the vast amount of unstructured feedback available online. Addressing this gap is especially critical in modern development environments, where prevailing production models increasingly prioritize player feedback \cite{ea_steam, feedback_analysis_game_dev}.
+
+\section{Application Context}
+
+\subsection{State-of-the-Art Brief}
+Rajapakshe (2019) noted that no tools existed to fully automate the processing of feedback, leaving the development of such tools as future work \cite{feedback_analysis_game_dev}. However, recent advances in artificial intelligence (AI) have substantially simplified feature extraction and sentiment analysis. It is now possible to conduct reliable aspect-based classification on data that were previously limited to binary classification \cite{ML_feature_extraction_al_tawil_et_al}. The broader state of the art is discussed in detail in Chapter \ref{chap:state_of_the_art}.
+
+\subsection{State-of-the-Practice Brief}
+Most off-the-shelf (OTS) game engines provide built-in trackers for player metrics. These metrics can be integrated into business intelligence (BI) pipelines using OTS tools (e.g., Tableau\footnote{\url{https://www.tableau.com}}) or custom machine learning pipelines. Distribution platforms such as Steam also provide developer APIs to collect Key Performance Indicators (KPIs). Recently, third-party analytics platforms such as GameAnalytics\footnote{\url{https://www.gameanalytics.com}} and devtodev\footnote{\url{https://www.devtodev.com}} have gained popularity.
+
+These tools offer default analytics pipelines and increasingly allow custom pipeline generation via natural language prompts. An AI agent interprets the prompt and builds the necessary pipeline by interfacing directly with the provided APIs and SDKs. Although versatile, this approach is vulnerable to hallucinations from large language models (LLMs), leaving users with little control over the pipeline's logic or the correctness of its output, because current architectures can only mitigate rather than eliminate the problem \cite{hallucination_nlg}. Consequently, these plug-and-play solutions are often preferred by small independent teams because of lower costs, despite the inherent risks.
+
+Crucially, while these solutions provide deep insights into player metrics and behavior, they largely overlook qualitative player feedback. This makes it easy to model what users do, but not why they do it. This limitation is particularly problematic when addressing ethical concerns in game development, where textual reviews and community posts are a crucial source of information \cite{ethical_game_dev_reddit}. Translating natural language into structured data remains a complex challenge. As discussed in Chapter \ref{chap:state_of_the_art} and Section \ref{NLP_challenges}, traditional natural language processing (NLP) algorithms face significant limitations, particularly with game reviews, which are frequently noisy, highly contextual, or sarcastic.
+
+In the adjacent field of mobile applications, Apple has described a pipeline of small, fine-tuned LLMs and embedding models that extract features from App Store reviews\footnote{\url{https://machinelearning.apple.com/research/app-store-review}}. Although Google has not published the architecture used for the Play Store, it is reasonable to infer that similar technologies are deployed. These platforms also distribute mobile games, yet no comparable, publicly documented solution has been adopted by PC or console distribution platforms, and it remains unclear whether such techniques transfer to game reviews, whose feature space differs substantially from that of mobile applications. This thesis explores whether an LLM-based extraction pipeline can be adapted to this domain and used in development requirement analysis.
+
+\section{Objectives}
+\goal{To design, implement, and evaluate StARAPTOR, a prototype system that converts unstructured player feedback from Steam reviews into quantified inputs for ML-based forecasting of player engagement.}
+
+The system addresses three sub-objectives.
+
+\begin{itemize}
+    \item \textbf{Extraction of structured attributes from noisy review bodies.} Player reviews are unstructured but information-rich, and manual reading is not feasible with high review throughtput. StARAPTOR uses an LLM to separate noise, such as sarcasm and unrelated content, from signal; this produces an ordinal rating for each design pillar in each review and finding associated qualitative data.
+    \item \textbf{Identification of recurring patterns across reviews.} StARAPTOR applies association mining to the extracted attributes to find and understand common patterns. Every mined rule remains traceable to the reviews that support it, because each attribute is tied to the source.
+    \item \textbf{Per-game forecasting of engagement metrics.} Different games respond differently to the same design issues, so a single global model would average away the signal. StARAPTOR trains and tunes an XGBoost regressor per game, using the extracted attributes and mined rules as features, to forecast daily average concurrent players and estimate which features are most strongly associated with engagement and retention.
+\end{itemize}
+
+These sub-objectives are addressed by the research questions and evaluated as described in Chapter \ref{chap:evaluation}.
+
+\rqbox{1}{Are there any advantages into implementing a}
