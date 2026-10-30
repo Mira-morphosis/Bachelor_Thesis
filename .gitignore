@@ -1,1 +1,52 @@
+## LaTeX build artifacts
+
+# Core auxiliary files
+*.aux
+*.lof
+*.lot
+*.fls
+*.out
+*.toc
+*.fmt
+*.fot
+*.cb
+*.cb2
+.*.lb
+
+# Bibliography
+*.bbl
+*.bcf
+*.blg
+*-blx.aux
+*-blx.bib
+*.run.xml
+
+# Build tool files
+*.fdb_latexmk
+*.synctex
+*.synctex(busy)
+*.synctex.gz
+*.synctex.gz(busy)
+*.pdfsync
+
+# Logs and index
+*.log
+*.brf
+*.idx
+*.ilg
+*.ind
+*.ist
+*.nav
+*.pre
+*.snm
+*.vrb
+
+# ConTeXt / misc
+*.dvi
+*.xdv
+*.ps
+*~
+*.bak
+
+# Compiled output — keep source PDFs (figures, logos) but ignore main output
 main.pdf
