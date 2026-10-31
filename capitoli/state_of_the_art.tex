@@ -1,0 +1,89 @@
+\chapter{Background and State of the Art}
+\label{chap:state_of_the_art}
+
+\section{Background and Core Concepts}
+\label{sec:background_concepts}
+To understand the methodology proposed in this thesis, it is necessary to establish the foundational challenges of review-based analytics. Unlike traditional enterprise software, game development relies heavily on continuous player feedback loops distributed through digital storefronts like Steam. Player reviews serve as a primary telemetry-adjacent source of qualitative data. However, processing this data introduces significant technical challenges, particularly due to noise, sarcasm, and unstructured text formatting, thus making review-based analytics underused in the state of the practice in favor of telemetry-based analytics (see Section~\ref{sec:sotp}).
+
+\section{State of the Practice in Game Analysis}
+\label{sec:sotp}
+Most off-the-shelf (OTS) game engines provide built-in trackers for player metrics. These metrics can be integrated into business intelligence (BI) pipelines using OTS tools (e.g., Tableau\footnote{\url{https://www.tableau.com}}) or custom machine learning pipelines. Distribution platforms such as Steam also provide developer APIs to collect Key Performance Indicators (KPIs). Recently, third-party analytics platforms such as GameAnalytics\footnote{\url{https://www.gameanalytics.com}} and devtodev\footnote{\url{https://www.devtodev.com}} have gained popularity.
+
+These tools offer default analytics pipelines and increasingly allow custom pipeline generation via natural language prompts. An AI agent interprets the prompt and builds the necessary pipeline by interfacing directly with APIs and SDKs. Although versatile, this approach is vulnerable to hallucinations from Large Language Models (LLMs), leaving users with little control over the pipeline's logic or output correctness, as current architectures can only mitigate rather than eliminate the problem \cite{hallucination_nlg}. Consequently, these plug-and-play solutions are often preferred by small independent teams because of lower costs, despite the inherent risks.
+
+Crucially, while these solutions provide deep insights into player metrics and behavior, they largely overlook qualitative player feedback. This makes it easy to model what users do, but not why they do it. This limitation is particularly problematic when addressing ethical concerns or community sentiment in game development, where textual reviews are a crucial source of information \cite{ethical_game_dev_reddit}. Translating natural language into structured data remains complex, as traditional NLP algorithms struggle with noisy, highly contextual, or sarcastic game reviews.
+
+In the adjacent field of mobile applications, Apple has described a pipeline of small, fine-tuned LLMs and embedding models that extract features from App Store reviews\footnote{\url{https://machinelearning.apple.com/research/app-store-review}}. Although Google has not published the architecture used for the Play Store, it is reasonable to infer similar technologies are deployed. These platforms also distribute mobile games, yet no comparable, publicly documented solution has been adopted by PC or console distribution platforms. these solutions cannot be trivially ported to the Video Game Software Engineering (VGSE) domain. Research demonstrates that the feature spaces and player behaviors of PC game reviews differ substantially from mobile applications \cite{steam_vs_mobile}. Consequently, the problem domains are fundamentally distinct. Research on how to translate these advanced feedback analytics to the unique, highly contextual requirements of the VGSE domain remains in its infancy, creating a critical methodological gap. This thesis explores whether an LLM-based extraction pipeline can be successfully adapted to this domain and integrated into development requirement analysis.
+
+\section{Past Limitations of Natural Language Processing in Gaming}
+\label{sec:past_limitations}
+Analyzing unstructured text in the video game domain presents severe natural language processing (NLP) challenges. Li et al. highlight the difficulty of labeling ethical problems in video games, because social and ethical issues are often not named directly by the posts' authors \cite{ethical_game_dev_reddit}. This problem was traditionally addressed by manually assigning labels to a dataset to train classifiers. However, this approach is not scalable to large volumes of data or expanding problem sets (that causes an explosion in the number of required labels), especially in the context of Steam reviews. Unstructured, noisy reviews containing sarcastic remarks, off-topic messages, ASCII art, or internet memes make syntax formalization, stemming, and normalization insufficient. Furthermore, Steam faces a known botting problem driven by Terms of Service (TOS)-breaking strategies designed to manipulate platform markets, a challenge thoroughly researched by other scholars \cite{steam_bot_detection}. This research challenge is further explored in Section \ref{sec:nlp}.
+
+\section{Extracting Information from Reviews}
+\label{sec:nlp}
+
+\paragraph{Early research} Rajapakshe in 2019 noted that no tools existed to fully automate the processing of feedback, leaving the development of such tools as open future work \cite{feedback_analysis_game_dev}. However, recent advances in artificial intelligence have substantially simplified feature extraction and sentiment analysis.
+
+\paragraph{Feature-powered classifiers for binary sentiment analysis} Al Tawil et al. propose a pipeline to extract reliable quantitative and qualitative metrics from Steam reviews and use such metrics to build a binary classifier capable of deducing sentiment by understanding how different aspects weight on sentiment for different games \cite{ML_feature_extraction_al_tawil_et_al}. The research team tested various Machine Learning (ML) and Deep Learning algorithms and found that XGBoost achieved high accuracy (0.9499) but a low ROC-AUC (0.6113), revealing clear signs of overfitting—largely because reviews tend to be predominantly positive, leading the model to default to recommending the game. The research team explicitly concludes that Steam reviews produce unbalanced and noisy datasets, suggesting that Transformer-based models or advanced cleaning pipelines are necessary future solutions. This aligns with the conclusions drawn in Section \ref{sec:past_limitations}.
+
+\paragraph{Generative AI in non-binary sentiment analysis} Abdelqader proposes an XGBoost-based regressor \cite{abdelqader_2025_using_generative_ai_enjoyment} that, for each game, uses average scores (on a scale from 0 to 5) across 12 dimensions of game design extracted from Steam and Meta storefront metadata. The system predicts how much players enjoy a game on a scale from 1 to 5. Rather than complex NLP systems, it leverages an OTS Small Language Model, "Phi-4," guided by a system prompt and a pre-built JSON output schema to avoid rambling responses and reduce hallucinations.
+
+Abdelqader's system extracts comprehensive metadata for each review, as summarized in Table \ref{table:abdelqader_features}:
+
+\begin{longtable}{>{\columncolor{graytable}}p{0.25\linewidth} p{0.2\linewidth} >{\centering\arraybackslash}p{0.50\linewidth}}
+    \caption{Predicted review features}
+    \label{table:abdelqader_features}\\
+    \toprule
+    \rowcolor{black}
+    \textbf{\textcolor{white}{Feature}} & \textbf{\textcolor{white}{Expected values}} & \textbf{\textcolor{white}{Description}}\\
+    \bottomrule
+    \endfirsthead
+    \toprule
+    \rowcolor{black}
+    \textbf{\textcolor{white}{Feature}} & \textbf{\textcolor{white}{Expected values}} & \textbf{\textcolor{white}{Description}}\\
+    \bottomrule
+    \endhead
+    \bottomrule
+    \endfoot
+    \textbf{Gameplay} & 1-5 & Score for core mechanics and interactive experience quality.\\
+    \textbf{Graphics} & 1-5 & Score for visual presentation and design quality.\\
+    \textbf{Difficulty} & 1-5 & Score for balance and challenge offered to players.\\
+    \textbf{Story} & 1-5 & Score for narrative depth and engagement.\\
+    \textbf{Audio} & 1-5 & Score for sound effects, music, and overall auditory design.\\
+    \textbf{Avatar Customization} & 1-5 & Score for representation and customization of the player's character.\\
+    \textbf{Controls} & 1-5 & Score for usability and responsiveness of input methods.\\
+    \textbf{Monetization Model} & 1-5 & Score for revenue strategies, such as in-app purchases.\\
+    \textbf{Replayability} & 1-5 & Score for replay value and repeated play session potential.\\
+    \textbf{Community} & 1-5 & Score for interaction and engagement with other players.\\
+    \textbf{Multiplayer} & 1-5 & Score for cooperative or competitive play support.\\
+    \textbf{Spatial Presence} & 1-5 & Score for the immersive feeling of being ``inside'' the game environment.\\
+    \textbf{Recommended} & 0-1 & Whether the reviewer recommends the game (1) or not (0).\\
+    \textbf{Is\_Helpful} & 0-1 & Whether the review content is helpful to the developer (1) or not (0).\\
+    \textbf{Is\_Pro} & 0-1 & Whether the review highlights a positive aspect (1) or not (0).\\
+    \textbf{Is\_Con} & 0-1 & Whether the review identifies a negative aspect (1) or not (0).\\
+    \textbf{Is\_Video} & 0-1 & Whether the review includes a URL to a video review (1) or not (0).\\
+    \textbf{Is\_Suggestion} & 0-1 & Whether the review includes improvement suggestions (1) or not (0).\\
+    \textbf{Is\_Bug} & 0-1 & Whether the review describes an in-game bug (1) or not (0).\\
+    \textbf{Review\_Language} & 1-11 & Language category code (1 = Simplified Chinese, 2 = English, etc.)\\
+\end{longtable}
+
+Phi-4 achieved strong performance relative to its parameter size. Filtering reviews by language code also allowed researchers to observe public perceptions beyond Western biases. However, while spam handling is incorporated into prompts, the author notes that the system lacks built-in mechanisms to detect sarcastic comments or intentional hostility like review bombing. 
+
+Despite these limitations, Abdelqader's work demonstrates the viability of Generative AI for extracting feature dimensions from reviews when such models are harnessed and put in heavy restrictions on output, reducing the risk of hallucinations described in \ref{sec:sotp}. However, existing literature still lacks an integrated approach that connects these extracted attributes at a per-game level. This exact research gap forms the foundation of StARAPTOR, as introduced in this thesis.
+
+\section{Association Rule Mining for Unstructured Text and Feature Expansion}
+\label{sec:association_mining}
+While Large Language Models provide the capability to extract discrete, dimensional attributes from unstructured user reviews, understanding how these attributes co-occur and collectively influence software perception requires pattern discovery techniques. Association Rule Mining (ARM) has increasingly transitioned from traditional transactional databases to natural language processing and software engineering tasks. Modern literature demonstrates that applying algorithms such as Frequent Pattern Growth (FP-Growth) to text-extracted feature sets allows researchers to uncover latent feature dependencies and compound requirements, such as how specific software defects reliably co-occur with negative sentiment regarding monetization or performance \cite{fernandez2022survey_arm_text}.
+
+In requirements engineering and user feedback analysis, association mining bridges qualitative textual complaints and quantitative modeling by revealing structured association rules that raw classifiers overlook \cite{sulianta2024advancements_arm}. Recent studies highlight FP-Growth's efficiency over candidate-generation methods (like Apriori) when processing dense textual feature matrices, as its compressed FP-Tree structure avoids repeated dataset scans \cite{wu2024icfm_fpgrowth}. 
+
+However, existing literature primarily uses association rule mining for static document categorization, keyword recommendation, or exploratory feedback grouping. Integrating FP-Growth association mining with time-series regressors to forecast player engagement remains an underexplored paradigm in game software engineering. StARAPTOR addresses this exact gap by leveraging FP-Growth to expand feature dimensionality from LLM-extracted review attributes, forming a combined feature matrix that directly feeds per-game time-series models.
+
+\section{Time-series forecasting and event modeling} 
+Moving from static review classification to temporal engagement forecasting, Guitart et al. proposed a framework to forecast sales and playtime for Free-to-Play games using anomaly detection and a structured ``Event Scale'' (ranking internal events from 1 to 4 based on strategic importance) \cite{guitart_forecasting}. Their work demonstrated that 100\% of time-series anomalies are triggered by internal or external events, with their influence persisting via linear or geometric decay functions. Furthermore, they concluded that traditional Machine Learning models outperform Deep Learning when historical data points are constrained (fewer than 1,000 daily points). However, a critical limitation of this approach is its strict reliance on internal corporate data, predefined update budgets, and explicit event schedules. It completely overlooks qualitative community sentiment and unannounced shifts. While Guitart et al. map known corporate events to impact scales, StARAPTOR expands upon this paradigm by combining temporal trends with association mining on unstructured reviews. This enables the system to capture shifts in player sentiment that are directly reported in user feedback but remain invisible to traditional telemetry-only pipelines.
+
+\urldef{\newzoourl}\url{https://newzoo.com/resources/trend-reports/newzoo-global-games-market-report-2025}
+\section{Concluding Remarks}
+The analyzed literature clearly reveals a significant scarcity of automated tools designed to assist developers in processing user feedback within the video game industry, despite the various algorithms and engineering solutions proposed by researchers to address this issue. While similar automated analytics pipelines are widespread in traditional enterprise software engineering, they remain largely absent in the gaming sector. Historically treated as an engineering domain of secondary importance, the video game industry now encompasses approximately 3.6 billion players worldwide, representing a massive global market valued at \$188.8 billion in US dollars (as of 2025).\footnote{Newzoo Global Games Market Report, 2025, available at \newzoourl.}
+
+Nevertheless, existing studies demonstrate that it is entirely feasible to engineer systems capable of leveraging Steam review bodies and historical platform data. Such frameworks provide developers with actionable insights to forecast software performance metrics and systematically analyze the primary strengths and weaknesses of their titles. Specifically, no existing framework combines LLM-based feature extraction from Steam reviews with association rule mining to capture cross-dimensional dependencies, nor integrates these expanded features into per-game time-series regressors to forecast temporal player engagement.

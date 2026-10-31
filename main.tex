@@ -6,7 +6,7 @@
 %
 
 
-% Comandi per generare PDF-A2 con i relativi metadati 
+% Comandi per generare PDF-A2 con i relativi metadati
 \begin{filecontents*}[overwrite]{\jobname.xmpdata}
 \Title{StARAPTOR: Empowering Player Voices in Game Development Pipelines via LLM-Powered Feature Extraction, Association Mining, and Player Count Forecasting}
 \Author{Alfonso Maria Vicidomini}
@@ -21,7 +21,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \documentclass[a4paper,12pt,oneside,top=3cm,bottom=3cm,left=3.5cm,right=3.5cm,openright,reqno,table]{book}
 % openany - fa iniziare i capitoli direttamente nella pagina successiva
-% openright - fa iniziare i capitoli nella prima pagina destra disponibile 
+% openright - fa iniziare i capitoli nella prima pagina destra disponibile
 % fleqn  - allinea le formule a sinistra anzichè centrarle
 % leqno - dispone la numerazione delle formule sulla sinistra o destra
 % reqno - dispone la numerazione delle formule sulla destra
@@ -62,7 +62,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
 
-% frontespizio 
+% frontespizio
 \include{covermatter/frontespizio}
 
 % sesalab
@@ -80,7 +80,7 @@
 % se non si vuole che compaia il numero di pagina basta usare il comando:
 %\nonumber
 
-% indici 
+% indici
 \include{covermatter/indici}
 
 \mainmatter
@@ -88,6 +88,8 @@
 
 % TODO inserire capitoli
 \include{capitoli/introduzione}
+\include{capitoli/state_of_the_art}
+
 \include{capitoli/esempio}
 \include{capitoli/conclusioni}
 
