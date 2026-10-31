@@ -51,5 +51,15 @@
 # Compiled output — keep source PDFs (figures, logos) but ignore main output
 main.pdf
 
+# Minted temporary files and directories
+_minted*
+*.minted
+
 # Template/example chapter — keep on disk but do not track
 capitoli/esempio.tex
+
+# Generated covermatter files (compiled dynamically from template/)
+covermatter/frontespizio.tex
+covermatter/sesa.tex
+covermatter/indici.tex
+covermatter/treedom.tex

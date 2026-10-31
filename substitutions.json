@@ -1,0 +1,27 @@
+{
+  "covermatter/frontespizio.tex": {
+    "Università degli Studi di Salerno": "University of Salerno",
+    "Dipartimento di Informatica": "Department of Computer Science",
+    "Corso di Laurea Triennale in Informatica": "Bachelor's Degree in Computer Science",
+    "Tesi di Laurea": "Bachelor's Thesis",
+    "Titolo della Tesi": "StARAPTOR: Empowering Player Voices in Game Development Pipelines via LLM-Powered Feature Extraction, Association Mining, and Player Count Forecasting",
+    "Relatore": "Supervisor",
+    "Prof. Nome relatore": "Prof. Fabio Palomba",
+    "{\\large Dott. Nome tutor} \\\\": "% {\\large Dott. Nome tutor} \\\\",
+    "Candidato": "Candidate",
+    "Nome Cognome": "Alfonso Maria Vicidomini",
+    "Matricola: 0123456789": "Student ID: 0512113682",
+    "Anno Accademico YYYY-YYYY": "Academic Year 2025/2026"
+  },
+  "covermatter/sesa.tex": {
+    "Questa tesi è stata realizzata nel": "This thesis has been realized in"
+  },
+  "covermatter/indici.tex": {
+    "Elenco delle Figure": "List of Figures",
+    "Elenco delle Tabelle": "List of Tables"
+  },
+  "covermatter/treedom.tex": {
+    "Questa tesi ha contribuito a piantare un albero in Kenya tramite il progetto Treedom.": "This thesis has contributed to planting a tree in Kenya through the Treedom project."
+  }
+}
+

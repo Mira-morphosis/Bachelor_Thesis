@@ -16,6 +16,11 @@
 \end{filecontents*}
 
 
+% Path to template submodule so LaTeX can locate .sty/.cls files without tool-dependent flags
+\makeatletter
+\def\input@path{{template/}}
+\makeatother
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %   PREAMBOLO DEL DOCUMENTO     %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -46,6 +51,17 @@
 
 % tutti i package sono specificati in un file a parte: packages.sty
 \usepackage{packages}
+\usepackage{float}
+\usepackage{longtable}
+\renewcommand*{\backrefalt}[4]{%
+   \ifcase #1 %
+      \relax%
+   \or
+      (Cited on page~#2)%
+   \else
+      (Cited on pages~#2)
+   \fi}
+\graphicspath{{covermatter/figure/},{capitoli/figure/},{figure/},{template/covermatter/figure/},{template/figure/}}
 
 % comandi personalizzati
 \usepackage{utils}
@@ -90,7 +106,7 @@
 \include{capitoli/introduzione}
 \include{capitoli/state_of_the_art}
 
-\include{capitoli/esempio}
+%\include{capitoli/esempio}
 \include{capitoli/conclusioni}
 
 \backmatter
