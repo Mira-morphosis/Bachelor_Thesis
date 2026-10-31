@@ -50,3 +50,6 @@
 
 # Compiled output — keep source PDFs (figures, logos) but ignore main output
 main.pdf
+
+# Template/example chapter — keep on disk but do not track
+capitoli/esempio.tex
