@@ -2,20 +2,21 @@
 
 \section{Context and Problem Domain}
 
-\paragraph{Game Development and Engineering Standards}
+\paragraph{Game Development and Engineering Standards.}
 Game development is a branch of software engineering focused on producing video games. Because the industry expanded relatively late in the West (growing significantly only after the 1985 US release of the Nintendo Entertainment System), its production pipelines lack the formal definitions common in enterprise software development. Whereas organizations such as ISO, IEC, and IEEE publish globally accepted standards for software life cycle processes \cite{12207-2026}, game development relies on less formalized workflows. McKenzie et al. note similarities with Agile methodologies, but game development does not strictly adhere to them \cite{se_practices_game_dev}.
 
-\paragraph{Evolution of Game Development and Distribution}
+\paragraph{Evolution of Game Development and Distribution.}
 Over the past two decades, the video game industry has undergone one of the most significant paradigm shifts in software. Before the widespread adoption of high-speed internet, games were distributed ``as-is'' with no assurance of maintenance or evolution. Software updates were scarce, and physical ``game expansions'' incurred prohibitive distribution costs, restricting them to high-budget projects. Consequently, maintenance and evolution were not central to the software life cycle. Today, continuous updates and downloadable content (DLC) are the norm. The traditional release model is increasingly being superseded by Games-as-a-Service (GaaS) and Early Access (EA) release strategies, which introduce fundamentally different development pipelines and player behaviors \cite{paradigm_shifts_game_dev, ea_steam}.
 
-\paragraph{Impact on Development Pipelines}
+\paragraph{Impact on Development Pipelines.}
 This shift has forced production pipelines to become faster and more iterative. However, little work has been done to formalize requirements extraction and user feedback validation. Meanwhile, the player base and the volume of feedback have grown exponentially, driven by integrated review systems on digital distribution platforms. This often creates a critical gap between user needs and developer deliverables. Furthermore, researchers have yet to reach a consensus on the optimal approach to aggregate and analyze the vast amount of unstructured feedback available online. Addressing this gap is especially critical in modern development environments, where prevailing production models increasingly prioritize player feedback \cite{ea_steam, feedback_analysis_game_dev}.
 
-\section{Problem Statement and Research Gap}
+\section{Problem Statement and Research Gap.}
 Existing analytical solutions primarily attempt to model player behavior by applying statistical algorithms to telemetry data and established Key Performance Indicators (KPIs), largely overlooking qualitative player feedback. While aggregating large-scale telemetry datasets enables studios to identify specific game design failure points that reduce engagement, research indicates that quantitative metrics alone are insufficient. 
 The underlying causes of player attrition are not always strictly technical or mechanics-driven; they often stem from broader issues, such as ethical concerns, community sentiment, or emergent social dynamics, and so remain undetectable through raw telemetry. Consequently, relying solely on behavioral data leaves developers unable to fully understand the qualitative rationale behind player actions, creating a critical gap in requirements engineering and player retention analysis. Research shows that by building pipelines based on Large Language Models (LLMs), it is possible to algorithmically model quantitative and qualitative features from text reviews in a reliable way, making it possible to automate information extraction from sources that in the past were only subject to manual analysis \cite{abdelqader_2025_using_generative_ai_enjoyment}. However, such approaches rarely see application in practice: this approach is more common in the adjacent field of Mobile Development, with platforms like Apple's App Store and Google's Play Store implementing complex LLM-based dynamic feature extraction pipelines to build short summaries of the reviewers' opinion.
 
 \section{Objectives}
+\label{sec:objectives}
 \goal{To design, implement, and evaluate StARAPTOR, a prototype system that converts unstructured player feedback from Steam reviews into quantified inputs for ML-based forecasting of player engagement.}
 
 The system addresses three sub-objectives.
