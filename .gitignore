@@ -59,7 +59,4 @@ _minted*
 capitoli/esempio.tex
 
 # Generated covermatter files (compiled dynamically from template/)
-covermatter/frontespizio.tex
-covermatter/sesa.tex
-covermatter/indici.tex
-covermatter/treedom.tex
+covermatter/
