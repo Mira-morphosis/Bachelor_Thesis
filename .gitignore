@@ -28,6 +28,7 @@
 *.synctex.gz
 *.synctex.gz(busy)
 *.pdfsync
+*.xmpi
 
 # Logs and index
 *.log
@@ -50,6 +51,7 @@
 
 # Compiled output — keep source PDFs (figures, logos) but ignore main output
 main.pdf
+*.xmpdata
 
 # Minted temporary files and directories
 _minted*

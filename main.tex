@@ -18,7 +18,6 @@
 
 % Path to template submodule so LaTeX can locate .sty/.cls files without tool-dependent flags
 \makeatletter
-\def\input@path{{template/}}
 \makeatother
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -61,7 +60,7 @@
    \else
       (Cited on pages~#2)
    \fi}
-\graphicspath{{covermatter/figure/},{capitoli/figure/},{figure/},{template/covermatter/figure/},{template/figure/}}
+\graphicspath{{__COVERMATTER__/figure/},{capitoli/figure/},{figure/},{template/figure/}}
 
 % comandi personalizzati
 \usepackage{utils}
@@ -79,13 +78,13 @@
 \begin{document}
 
 % frontespizio
-\include{covermatter/frontespizio}
+\include{__COVERMATTER__/frontespizio}
 
 % sesalab
-\include{covermatter/sesa}
+\include{__COVERMATTER__/sesa}
 
 %dedica
-\include{covermatter/dedica}
+\include{__COVERMATTER__/dedica}
 
 % abstract
 \renewcommand{\abstractname}{Abstract}
@@ -97,7 +96,7 @@
 %\nonumber
 
 % indici
-\include{covermatter/indici}
+\include{__COVERMATTER__/indici}
 
 \mainmatter
 % quello che segue sarà in numerazione araba e i capitoli verranno numerati
@@ -116,10 +115,10 @@
 \bibliography{references}
 
 % ringraziamenti
-\include{covermatter/ringraziamenti}
+\include{__COVERMATTER__/ringraziamenti}
 
 % se hai intenzione di donare un albero tramite treedom
-\include{covermatter/treedom}
+\include{__COVERMATTER__/treedom}
 
 \end{document}
 
